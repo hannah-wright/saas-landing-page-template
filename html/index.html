@@ -1,0 +1,799 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SaaS Landing Page Template (DevTools) - React, Vue, HTML on Tailwind</title>
+    <meta name="description" content="A free SaaS landing page template (the DevTools theme) in React, Vue, and HTML on Tailwind CSS. Open this file in a browser to preview it." />
+    <!-- DevTools - a free SaaS landing page template by SaaS Design. MIT licensed. -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+    <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+    <style type="text/tailwindcss">
+/* Design tokens for the DevTools landing page template by SaaS Design. MIT licensed. */
+
+@import "tailwindcss";
+
+@theme inline {
+  /* Type */
+  --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", monospace;
+  /* Display font, used on landing/marketing templates only (dashboards keep
+     --font-sans). Apply with the `font-display` utility. */
+  --font-display: "Figtree", ui-sans-serif, system-ui, -apple-system, sans-serif;
+
+  /* Semantic color mapping (components use these utility names) */
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-success: var(--success);
+  --color-success-foreground: var(--success-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  /* Radius scale (derived from one --radius so the whole feel shifts together) */
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+
+  /* Elevation: subtle, neutral, slightly cool. Borders lead; shadows support. */
+  --shadow-xs: 0 1px 2px 0 oklch(0.2 0.04 285 / 0.06);
+  --shadow-sm: 0 1px 3px 0 oklch(0.2 0.04 285 / 0.08), 0 1px 2px -1px oklch(0.2 0.04 285 / 0.08);
+  --shadow-md: 0 4px 12px -2px oklch(0.2 0.04 285 / 0.10);
+  --shadow-lg: 0 12px 32px -8px oklch(0.2 0.04 285 / 0.14);
+
+  /* Motion: restrained and snappy */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --duration-fast: 150ms;
+  --duration: 200ms;
+}
+
+:root {
+  /* Highest-identity single decision: medium radius, friendly but precise. */
+  --radius: 0.625rem;
+
+  /* Brand ramp (modern, gender-neutral blue) */
+  --brand-50:  oklch(0.970 0.018 255);
+  --brand-100: oklch(0.930 0.040 255);
+  --brand-300: oklch(0.780 0.110 255);
+  --brand-500: oklch(0.560 0.180 255); /* primary */
+  --brand-600: oklch(0.500 0.185 255); /* hover/active */
+  --brand-700: oklch(0.440 0.160 255);
+  --brand-900: oklch(0.300 0.110 255);
+
+  /* Light mode (this is the mode we perfect). Neutrals are cool gray. */
+  --background: oklch(0.990 0.002 260);
+  --foreground: oklch(0.220 0.010 260);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.220 0.010 260);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.220 0.010 260);
+  --primary: var(--brand-500);
+  --primary-foreground: oklch(0.990 0 0);
+  --secondary: oklch(0.965 0.004 260);
+  --secondary-foreground: oklch(0.300 0.010 260);
+  --muted: oklch(0.965 0.004 260);
+  --muted-foreground: oklch(0.520 0.012 260);
+  --accent: oklch(0.950 0.022 255);
+  --accent-foreground: var(--brand-700);
+  --destructive: oklch(0.580 0.210 25);
+  --destructive-foreground: oklch(0.990 0 0);
+  --success: oklch(0.600 0.150 150);
+  --success-foreground: oklch(0.990 0 0);
+  --border: oklch(0.920 0.005 260);
+  --input: oklch(0.920 0.005 260);
+  --ring: var(--brand-500);
+}
+
+.dark {
+  /* Near-black, faintly cool-blue. Deep canvas with a measured blue accent
+     (present, not neon) so it reads well in dark mode without being intrusive.
+     Cards lift just enough off the bg; borders (not shadows) define structure. */
+  --background: oklch(0.155 0.012 255);
+  --foreground: oklch(0.970 0.005 255);
+  --card: oklch(0.200 0.014 255);
+  --card-foreground: oklch(0.970 0.005 255);
+  --popover: oklch(0.200 0.014 255);
+  --popover-foreground: oklch(0.970 0.005 255);
+  --primary: oklch(0.640 0.155 255);
+  --primary-foreground: oklch(0.990 0 0);
+  --secondary: oklch(0.235 0.014 255);
+  --secondary-foreground: oklch(0.970 0.005 255);
+  --muted: oklch(0.235 0.014 255);
+  --muted-foreground: oklch(0.720 0.020 255);
+  --accent: oklch(0.320 0.045 255);
+  --accent-foreground: oklch(0.970 0.005 255);
+  --destructive: oklch(0.640 0.190 25);
+  --destructive-foreground: oklch(0.990 0 0);
+  --success: oklch(0.680 0.160 150);
+  --success-foreground: oklch(0.150 0.020 255);
+  --border: oklch(0.275 0.014 255);
+  --input: oklch(0.275 0.014 255);
+  --ring: oklch(0.640 0.155 255);
+}
+
+@layer base {
+  * {
+    border-color: var(--border);
+  }
+  body {
+    background-color: var(--background);
+    color: var(--foreground);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  /* The one typographic rule: headings are tight-tracked; body never exceeds 70ch. */
+  h1, h2, h3, h4 {
+    letter-spacing: -0.02em;
+    text-wrap: balance;
+  }
+  p {
+    max-width: 70ch;
+  }
+}
+    </style>
+  </head>
+  <body class="bg-background font-sans text-foreground">
+<style>
+  @keyframes df-rise { from { opacity: 0; transform: translateY(14px) } to { opacity: 1; transform: translateY(0) } }
+  @keyframes df-marquee { from { transform: translateX(0) } to { transform: translateX(-50%) } }
+  .df-rise { animation: df-rise .7s cubic-bezier(.16,1,.3,1) both }
+  .df-rise-2 { animation: df-rise .7s cubic-bezier(.16,1,.3,1) .08s both }
+  .df-marquee { animation: df-marquee 26s linear infinite }
+  @media (prefers-reduced-motion: reduce) { .df-rise, .df-rise-2, .df-marquee { animation: none } }
+  [data-landing] [data-page] { display: none }
+  [data-landing] [data-page].is-active { display: block }
+</style>
+
+<div class="min-h-screen bg-background font-sans text-foreground" data-landing>
+  <!-- HEADER -->
+  <header class="sticky top-0 z-30 border-b border-border bg-background/80 backdrop-blur">
+    <div class="mx-auto flex h-14 max-w-6xl items-center justify-between px-6">
+      <div class="flex items-center gap-8">
+        <a href="#" data-nav="home" class="flex cursor-pointer items-center gap-2">
+          <span class="flex h-6 w-6 items-center justify-center rounded-md bg-foreground text-background"><svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="currentColor"><path d="M3 3h18v4H3zM3 10h12v4H3zM3 17h18v4H3z"/></svg></span>
+          <span class="text-[15px] font-semibold tracking-tight">DevTools</span>
+        </a>
+        <nav class="hidden items-center gap-6 md:flex">
+          <a href="#" data-nav="features" class="cursor-pointer text-[13px] text-muted-foreground transition-colors hover:text-foreground">Product</a>
+          <a href="#" data-nav="docs" class="cursor-pointer text-[13px] text-muted-foreground transition-colors hover:text-foreground">Docs</a>
+          <a href="#" data-nav="pricing" class="cursor-pointer text-[13px] text-muted-foreground transition-colors hover:text-foreground">Pricing</a>
+          <a href="#" data-nav="changelog" class="cursor-pointer text-[13px] text-muted-foreground transition-colors hover:text-foreground">Changelog</a>
+        </nav>
+      </div>
+      <div class="flex items-center gap-2">
+        <a href="#" data-nav="pricing" class="hidden cursor-pointer rounded-md px-3 py-1.5 text-[13px] font-medium text-muted-foreground hover:text-foreground sm:inline-block">Sign in</a>
+        <a href="#" data-nav="pricing" class="inline-flex cursor-pointer items-center justify-center rounded-md bg-foreground px-3.5 py-1.5 text-[13px] font-semibold text-background hover:opacity-90">Start deploying</a>
+        <button class="-mr-1 rounded-md p-2 text-muted-foreground hover:bg-muted md:hidden" data-nav-toggle aria-label="Menu">
+          <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+        </button>
+      </div>
+    </div>
+    <nav data-mobile-nav class="hidden space-y-1 border-t border-border px-6 py-3 md:hidden">
+      <a href="#" data-nav="features" class="block cursor-pointer rounded-md px-2 py-2 text-sm text-muted-foreground hover:bg-muted">Product</a>
+      <a href="#" data-nav="docs" class="block cursor-pointer rounded-md px-2 py-2 text-sm text-muted-foreground hover:bg-muted">Docs</a>
+      <a href="#" data-nav="pricing" class="block cursor-pointer rounded-md px-2 py-2 text-sm text-muted-foreground hover:bg-muted">Pricing</a>
+      <a href="#" data-nav="changelog" class="block cursor-pointer rounded-md px-2 py-2 text-sm text-muted-foreground hover:bg-muted">Changelog</a>
+    </nav>
+  </header>
+
+  <!-- HOME -->
+  <section data-page="home" class="is-active">
+    <a href="#" data-nav="changelog" class="block cursor-pointer border-b border-border bg-muted/60 transition-colors hover:bg-muted">
+      <div class="mx-auto flex max-w-6xl items-center justify-center gap-2 px-6 py-2 text-center text-xs sm:text-sm">
+        <span class="rounded-full bg-foreground px-2 py-0.5 font-mono text-[10px] font-semibold uppercase tracking-wide text-background">New</span>
+        <span class="font-medium">DevTools Edge Functions are now generally available.</span>
+        <span class="font-semibold underline-offset-4 hover:underline">Read more &rarr;</span>
+      </div>
+    </a>
+    <main class="mx-auto max-w-6xl border-x border-border">
+      <section class="border-b border-border px-6 pb-16 pt-16 text-center sm:px-16 sm:pt-24 lg:px-28">
+        <span class="df-rise inline-block"><span class="font-mono text-[11px] font-medium uppercase tracking-[0.18em] text-muted-foreground">The platform for shipping fast</span></span>
+        <h1 class="df-rise mx-auto mt-6 max-w-3xl text-4xl font-bold leading-[1.05] tracking-[-0.03em] sm:text-6xl">Ship your code. We handle the rest.</h1>
+        <p class="df-rise-2 mx-auto mt-6 max-w-xl text-lg leading-relaxed text-muted-foreground">DevTools is the developer platform that builds, deploys, and scales your apps on a global edge network. Connect a repo and go live in under a minute.</p>
+        <div class="df-rise-2 mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
+          <a href="#" data-nav="pricing" class="inline-flex cursor-pointer items-center justify-center gap-1.5 rounded-md bg-foreground px-5 py-2.5 text-sm font-semibold text-background hover:opacity-90">Start deploying <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+          <a href="#" data-nav="docs" class="inline-flex cursor-pointer items-center justify-center rounded-md border border-border bg-card px-5 py-2.5 text-sm font-semibold hover:bg-muted">Read the docs</a>
+        </div>
+        <div class="df-rise-2 mx-auto mt-10 max-w-md overflow-hidden rounded-lg border border-border bg-card text-left shadow-sm">
+          <div class="flex items-center gap-1.5 border-b border-border bg-muted px-3.5 py-2">
+            <span class="h-2.5 w-2.5 rounded-full bg-muted-foreground/30"></span><span class="h-2.5 w-2.5 rounded-full bg-muted-foreground/30"></span><span class="h-2.5 w-2.5 rounded-full bg-muted-foreground/30"></span>
+            <span class="ml-2 font-mono text-[11px] text-muted-foreground">bash</span>
+          </div>
+          <div class="px-4 py-3.5 font-mono text-[12.5px] leading-relaxed">
+            <p><span class="text-muted-foreground">$</span> devtools deploy</p>
+            <p class="mt-1 text-muted-foreground">Building... <span class="text-foreground">done in 12s</span></p>
+            <p class="text-muted-foreground">Deployed to <span class="text-foreground underline underline-offset-2">devtools.app/acme</span></p>
+          </div>
+        </div>
+      </section>
+
+      <section class="border-b border-border px-6 py-9">
+        <p class="text-center font-mono text-[11px] uppercase tracking-[0.2em] text-muted-foreground">Trusted by teams at fast-moving companies</p>
+        <div class="relative mt-6 overflow-hidden" style="mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent);-webkit-mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent)">
+          <div class="df-marquee flex w-max items-center gap-x-14 opacity-55">
+            <span class="shrink-0 text-base font-bold tracking-tight">Northwind</span>
+            <span class="shrink-0 text-base font-bold tracking-tight">Vela</span>
+            <span class="shrink-0 text-base font-bold tracking-tight">Cobalt</span>
+            <span class="shrink-0 text-base font-bold tracking-tight">Mainsail</span>
+            <span class="shrink-0 text-base font-bold tracking-tight">Brightline</span>
+            <span class="shrink-0 text-base font-bold tracking-tight">Orbit</span>
+            <span class="shrink-0 text-base font-bold tracking-tight">Tidewater</span>
+            <span class="shrink-0 text-base font-bold tracking-tight">Northwind</span>
+            <span class="shrink-0 text-base font-bold tracking-tight">Vela</span>
+            <span class="shrink-0 text-base font-bold tracking-tight">Cobalt</span>
+            <span class="shrink-0 text-base font-bold tracking-tight">Mainsail</span>
+            <span class="shrink-0 text-base font-bold tracking-tight">Brightline</span>
+            <span class="shrink-0 text-base font-bold tracking-tight">Orbit</span>
+            <span class="shrink-0 text-base font-bold tracking-tight">Tidewater</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="border-b border-border px-6 py-16 sm:px-16 lg:px-28">
+        <div class="max-w-2xl">
+          <span class="font-mono text-[11px] font-medium uppercase tracking-[0.18em] text-muted-foreground">Features</span>
+          <h2 class="mt-4 text-3xl font-bold tracking-[-0.02em] sm:text-4xl">Everything you need to ship.</h2>
+          <p class="mt-3 text-muted-foreground">From the first commit to global scale, DevTools handles the infrastructure so you can stay in your editor.</p>
+        </div>
+        <div class="mt-9 grid gap-px overflow-hidden rounded-xl border border-border bg-border sm:grid-cols-2 lg:grid-cols-3">
+          <div class="flex flex-col bg-card p-6">
+            <span class="flex h-9 w-9 items-center justify-center rounded-lg border border-border bg-muted text-foreground"><svg class="h-[18px] w-[18px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 7l9-4 9 4-9 4-9-4zM3 12l9 4 9-4M3 17l9 4 9-4"/></svg></span>
+            <h3 class="mt-4 text-base font-semibold tracking-tight">Instant deploys</h3>
+            <p class="mt-1.5 text-sm leading-relaxed text-muted-foreground">Push to your branch and ship to production in seconds. No pipelines to babysit.</p>
+          </div>
+          <div class="flex flex-col bg-card p-6">
+            <span class="flex h-9 w-9 items-center justify-center rounded-lg border border-border bg-muted text-foreground"><svg class="h-[18px] w-[18px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 7l9-4 9 4-9 4-9-4zM3 12l9 4 9-4M3 17l9 4 9-4"/></svg></span>
+            <h3 class="mt-4 text-base font-semibold tracking-tight">Global edge network</h3>
+            <p class="mt-1.5 text-sm leading-relaxed text-muted-foreground">Serve every request from the closest region, automatically, with zero config.</p>
+          </div>
+          <div class="flex flex-col bg-card p-6">
+            <span class="flex h-9 w-9 items-center justify-center rounded-lg border border-border bg-muted text-foreground"><svg class="h-[18px] w-[18px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 7l9-4 9 4-9 4-9-4zM3 12l9 4 9-4M3 17l9 4 9-4"/></svg></span>
+            <h3 class="mt-4 text-base font-semibold tracking-tight">Preview environments</h3>
+            <p class="mt-1.5 text-sm leading-relaxed text-muted-foreground">Every pull request gets its own live URL to review before you merge.</p>
+          </div>
+          <div class="flex flex-col bg-card p-6">
+            <span class="flex h-9 w-9 items-center justify-center rounded-lg border border-border bg-muted text-foreground"><svg class="h-[18px] w-[18px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 7l9-4 9 4-9 4-9-4zM3 12l9 4 9-4M3 17l9 4 9-4"/></svg></span>
+            <h3 class="mt-4 text-base font-semibold tracking-tight">Built-in observability</h3>
+            <p class="mt-1.5 text-sm leading-relaxed text-muted-foreground">Logs, traces, and metrics for every deploy, with no agents to install.</p>
+          </div>
+          <div class="flex flex-col bg-card p-6">
+            <span class="flex h-9 w-9 items-center justify-center rounded-lg border border-border bg-muted text-foreground"><svg class="h-[18px] w-[18px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 7l9-4 9 4-9 4-9-4zM3 12l9 4 9-4M3 17l9 4 9-4"/></svg></span>
+            <h3 class="mt-4 text-base font-semibold tracking-tight">Instant rollbacks</h3>
+            <p class="mt-1.5 text-sm leading-relaxed text-muted-foreground">Something broke? Roll back to any previous deploy in one click.</p>
+          </div>
+          <div class="flex flex-col bg-card p-6">
+            <span class="flex h-9 w-9 items-center justify-center rounded-lg border border-border bg-muted text-foreground"><svg class="h-[18px] w-[18px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 7l9-4 9 4-9 4-9-4zM3 12l9 4 9-4M3 17l9 4 9-4"/></svg></span>
+            <h3 class="mt-4 text-base font-semibold tracking-tight">Secrets and env vars</h3>
+            <p class="mt-1.5 text-sm leading-relaxed text-muted-foreground">Encrypted environment variables, scoped per environment and per branch.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="border-b border-border px-6 py-12 sm:px-16 lg:px-28">
+        <div class="flex flex-col items-center justify-between gap-5 sm:flex-row">
+          <div><span class="font-mono text-[11px] font-medium uppercase tracking-[0.18em] text-muted-foreground">Works with your stack</span><h2 class="mt-3 text-2xl font-bold tracking-[-0.02em]">Deploy any framework. Zero config.</h2></div>
+          <div class="flex flex-wrap items-center gap-2">
+            <span class="rounded-md border border-border bg-card px-3 py-1.5 text-sm font-medium text-muted-foreground">Next.js</span>
+            <span class="rounded-md border border-border bg-card px-3 py-1.5 text-sm font-medium text-muted-foreground">Astro</span>
+            <span class="rounded-md border border-border bg-card px-3 py-1.5 text-sm font-medium text-muted-foreground">SvelteKit</span>
+            <span class="rounded-md border border-border bg-card px-3 py-1.5 text-sm font-medium text-muted-foreground">Remix</span>
+            <span class="rounded-md border border-border bg-card px-3 py-1.5 text-sm font-medium text-muted-foreground">Nuxt</span>
+            <span class="rounded-md border border-border bg-card px-3 py-1.5 text-sm font-medium text-muted-foreground">Vite</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="border-b border-border px-6 py-16 sm:px-16 lg:px-28">
+        <div class="mx-auto max-w-2xl text-center"><span class="font-mono text-[11px] font-medium uppercase tracking-[0.18em] text-muted-foreground">The dashboard</span><h2 class="mt-4 text-3xl font-bold tracking-[-0.02em] sm:text-4xl">Every deploy, in one place.</h2><p class="mt-3 text-muted-foreground">Watch builds, inspect logs, and roll back, all from a dashboard that stays out of your way.</p></div>
+        <div class="mx-auto mt-9 max-w-4xl overflow-hidden rounded-xl border border-border bg-card shadow-sm">
+          <div class="grid grid-cols-1 sm:grid-cols-[180px_1fr]">
+            <aside class="hidden flex-col gap-1 border-r border-border p-3 text-left sm:flex">
+              <div class="mb-2 flex items-center gap-2 px-1"><span class="flex h-5 w-5 items-center justify-center rounded bg-foreground text-background"><svg class="h-3 w-3" viewBox="0 0 24 24" fill="currentColor"><path d="M3 3h18v4H3zM3 10h12v4H3zM3 17h18v4H3z"/></svg></span><span class="text-xs font-bold">DevTools</span></div>
+              <span class="flex items-center gap-2 rounded-md px-2.5 py-1.5 text-xs text-muted-foreground"><span class="h-1.5 w-1.5 rounded-sm bg-muted-foreground/50"></span> Overview</span>
+              <span class="flex items-center gap-2 rounded-md bg-muted px-2.5 py-1.5 text-xs font-semibold text-foreground"><span class="h-1.5 w-1.5 rounded-sm bg-muted-foreground/50"></span> Deployments</span>
+              <span class="flex items-center gap-2 rounded-md px-2.5 py-1.5 text-xs text-muted-foreground"><span class="h-1.5 w-1.5 rounded-sm bg-muted-foreground/50"></span> Analytics</span>
+              <span class="flex items-center gap-2 rounded-md px-2.5 py-1.5 text-xs text-muted-foreground"><span class="h-1.5 w-1.5 rounded-sm bg-muted-foreground/50"></span> Logs</span>
+              <span class="flex items-center gap-2 rounded-md px-2.5 py-1.5 text-xs text-muted-foreground"><span class="h-1.5 w-1.5 rounded-sm bg-muted-foreground/50"></span> Settings</span>
+            </aside>
+            <div class="p-4 text-left">
+              <div class="flex items-center justify-between"><div><p class="text-sm font-bold tracking-tight">Deployments</p><p class="text-[11px] text-muted-foreground">acme / web</p></div><span class="rounded-md bg-foreground px-3 py-1.5 text-[11px] font-semibold text-background">Deploy</span></div>
+              <div class="mt-3 grid grid-cols-3 gap-2.5">
+                <div class="rounded-lg border border-border p-3"><p class="text-[10px] text-muted-foreground">Uptime</p><p class="mt-1 text-base font-bold tracking-tight">99.99%</p></div>
+                <div class="rounded-lg border border-border p-3"><p class="text-[10px] text-muted-foreground">Builds today</p><p class="mt-1 text-base font-bold tracking-tight">34</p></div>
+                <div class="rounded-lg border border-border p-3"><p class="text-[10px] text-muted-foreground">Avg build</p><p class="mt-1 text-base font-bold tracking-tight">11s</p></div>
+              </div>
+              <div class="mt-2.5 space-y-1.5">
+                <div class="flex items-center gap-2.5 rounded-lg border border-border px-3 py-2"><span class="h-2 w-2 rounded-full bg-foreground"></span><span class="flex-1 font-mono text-[11px]">main</span><span class="rounded-full bg-muted px-2 py-0.5 text-[9px] font-semibold text-muted-foreground">Ready</span><span class="font-mono text-[10px] text-muted-foreground">2m ago</span></div>
+                <div class="flex items-center gap-2.5 rounded-lg border border-border px-3 py-2"><span class="h-2 w-2 rounded-full bg-muted-foreground/40"></span><span class="flex-1 font-mono text-[11px]">feat/api</span><span class="rounded-full bg-muted px-2 py-0.5 text-[9px] font-semibold text-muted-foreground">Building</span><span class="font-mono text-[10px] text-muted-foreground">2m ago</span></div>
+                <div class="flex items-center gap-2.5 rounded-lg border border-border px-3 py-2"><span class="h-2 w-2 rounded-full bg-foreground"></span><span class="flex-1 font-mono text-[11px]">fix/auth</span><span class="rounded-full bg-muted px-2 py-0.5 text-[9px] font-semibold text-muted-foreground">Ready</span><span class="font-mono text-[10px] text-muted-foreground">2m ago</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="border-b border-border px-6 py-16 text-center sm:px-16 lg:px-28">
+        <blockquote class="mx-auto max-w-3xl text-2xl font-semibold leading-snug tracking-[-0.02em] sm:text-3xl">"We moved our whole stack to DevTools in an afternoon and cut our deploy times from minutes to seconds. It just gets out of the way."</blockquote>
+        <div class="mt-6 flex items-center justify-center gap-3"><span class="flex h-9 w-9 items-center justify-center rounded-full bg-muted text-sm font-bold">AK</span><div class="text-left"><p class="text-sm font-semibold">Avery Kim</p><p class="text-xs text-muted-foreground">Staff Engineer, Brightline</p></div></div>
+      </section>
+
+      <section class="px-6 py-20 text-center sm:px-16 lg:px-28">
+        <h2 class="mx-auto max-w-2xl text-4xl font-bold tracking-[-0.03em] sm:text-5xl">Deploy your first project in minutes.</h2>
+        <p class="mx-auto mt-4 max-w-xl text-muted-foreground">Connect a repository and DevTools takes care of the build, the CDN, and the scaling. Free to start.</p>
+        <div class="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row"><a href="#" data-nav="pricing" class="inline-flex cursor-pointer items-center justify-center rounded-md bg-foreground px-6 py-3 text-sm font-semibold text-background hover:opacity-90">Start deploying</a><a href="#" data-nav="pricing" class="inline-flex cursor-pointer items-center justify-center rounded-md border border-border bg-card px-6 py-3 text-sm font-semibold hover:bg-muted">View pricing</a></div>
+      </section>
+    </main>
+  </section>
+
+  <!-- FEATURES -->
+  <section data-page="features">
+    <main class="mx-auto max-w-6xl border-x border-border">
+      <section class="border-b border-border px-6 py-16 text-center sm:px-16 lg:px-28">
+        <span class="font-mono text-[11px] font-medium uppercase tracking-[0.18em] text-muted-foreground">Features</span>
+        <h1 class="mx-auto mt-4 max-w-3xl text-4xl font-bold tracking-[-0.03em] sm:text-5xl">Built for shipping fast.</h1>
+        <p class="mx-auto mt-4 max-w-xl text-lg leading-relaxed text-muted-foreground">Everything DevTools does, in one place. Connect a repo and the platform handles the rest.</p>
+      </section>
+      <section class="px-6 py-14 sm:px-16 lg:px-28">
+        <div class="grid gap-px overflow-hidden rounded-xl border border-border bg-border sm:grid-cols-2">
+          <div class="bg-card p-7">
+            <span class="flex h-10 w-10 items-center justify-center rounded-lg border border-border bg-muted text-foreground"><svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 7l9-4 9 4-9 4-9-4zM3 12l9 4 9-4M3 17l9 4 9-4"/></svg></span>
+            <h3 class="mt-4 text-lg font-semibold tracking-tight">Instant deploys</h3>
+            <p class="mt-2 text-sm leading-relaxed text-muted-foreground">Push to your branch and ship to production in seconds. No pipelines to babysit.</p>
+          </div>
+          <div class="bg-card p-7">
+            <span class="flex h-10 w-10 items-center justify-center rounded-lg border border-border bg-muted text-foreground"><svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 7l9-4 9 4-9 4-9-4zM3 12l9 4 9-4M3 17l9 4 9-4"/></svg></span>
+            <h3 class="mt-4 text-lg font-semibold tracking-tight">Global edge network</h3>
+            <p class="mt-2 text-sm leading-relaxed text-muted-foreground">Serve every request from the closest region, automatically, with zero config.</p>
+          </div>
+          <div class="bg-card p-7">
+            <span class="flex h-10 w-10 items-center justify-center rounded-lg border border-border bg-muted text-foreground"><svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 7l9-4 9 4-9 4-9-4zM3 12l9 4 9-4M3 17l9 4 9-4"/></svg></span>
+            <h3 class="mt-4 text-lg font-semibold tracking-tight">Preview environments</h3>
+            <p class="mt-2 text-sm leading-relaxed text-muted-foreground">Every pull request gets its own live URL to review before you merge.</p>
+          </div>
+          <div class="bg-card p-7">
+            <span class="flex h-10 w-10 items-center justify-center rounded-lg border border-border bg-muted text-foreground"><svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 7l9-4 9 4-9 4-9-4zM3 12l9 4 9-4M3 17l9 4 9-4"/></svg></span>
+            <h3 class="mt-4 text-lg font-semibold tracking-tight">Built-in observability</h3>
+            <p class="mt-2 text-sm leading-relaxed text-muted-foreground">Logs, traces, and metrics for every deploy, with no agents to install.</p>
+          </div>
+          <div class="bg-card p-7">
+            <span class="flex h-10 w-10 items-center justify-center rounded-lg border border-border bg-muted text-foreground"><svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 7l9-4 9 4-9 4-9-4zM3 12l9 4 9-4M3 17l9 4 9-4"/></svg></span>
+            <h3 class="mt-4 text-lg font-semibold tracking-tight">Instant rollbacks</h3>
+            <p class="mt-2 text-sm leading-relaxed text-muted-foreground">Something broke? Roll back to any previous deploy in one click.</p>
+          </div>
+          <div class="bg-card p-7">
+            <span class="flex h-10 w-10 items-center justify-center rounded-lg border border-border bg-muted text-foreground"><svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 7l9-4 9 4-9 4-9-4zM3 12l9 4 9-4M3 17l9 4 9-4"/></svg></span>
+            <h3 class="mt-4 text-lg font-semibold tracking-tight">Secrets and env vars</h3>
+            <p class="mt-2 text-sm leading-relaxed text-muted-foreground">Encrypted environment variables, scoped per environment and per branch.</p>
+          </div>
+        </div>
+      </section>
+    </main>
+  </section>
+
+  <!-- DOCS -->
+  <section data-page="docs">
+    <main class="mx-auto max-w-6xl border-x border-border">
+      <section class="border-b border-border px-6 py-16 text-center sm:px-16 lg:px-28">
+        <span class="font-mono text-[11px] font-medium uppercase tracking-[0.18em] text-muted-foreground">Documentation</span>
+        <h1 class="mx-auto mt-4 max-w-3xl text-4xl font-bold tracking-[-0.03em] sm:text-5xl">Docs</h1>
+        <p class="mx-auto mt-4 max-w-xl text-lg leading-relaxed text-muted-foreground">Guides and references to get you from zero to production.</p>
+      </section>
+      <section class="px-6 py-14 sm:px-16 lg:px-28">
+        <div class="grid gap-10 lg:grid-cols-[200px_1fr]">
+          <aside class="space-y-5 text-sm">
+            <div>
+              <p class="font-mono text-[11px] uppercase tracking-wide text-muted-foreground">Getting started</p>
+              <ul class="mt-2 space-y-1.5">
+                <li><a href="#" class="cursor-pointer text-muted-foreground hover:text-foreground">Quickstart</a></li>
+                <li><a href="#" class="cursor-pointer text-muted-foreground hover:text-foreground">Connect a repo</a></li>
+                <li><a href="#" class="cursor-pointer text-muted-foreground hover:text-foreground">Your first deploy</a></li>
+              </ul>
+            </div>
+            <div>
+              <p class="font-mono text-[11px] uppercase tracking-wide text-muted-foreground">Guides</p>
+              <ul class="mt-2 space-y-1.5">
+                <li><a href="#" class="cursor-pointer text-muted-foreground hover:text-foreground">Environment variables</a></li>
+                <li><a href="#" class="cursor-pointer text-muted-foreground hover:text-foreground">Custom domains</a></li>
+                <li><a href="#" class="cursor-pointer text-muted-foreground hover:text-foreground">Edge functions</a></li>
+              </ul>
+            </div>
+            <div>
+              <p class="font-mono text-[11px] uppercase tracking-wide text-muted-foreground">Reference</p>
+              <ul class="mt-2 space-y-1.5">
+                <li><a href="#" class="cursor-pointer text-muted-foreground hover:text-foreground">CLI</a></li>
+                <li><a href="#" class="cursor-pointer text-muted-foreground hover:text-foreground">REST API</a></li>
+                <li><a href="#" class="cursor-pointer text-muted-foreground hover:text-foreground">Build settings</a></li>
+              </ul>
+            </div>
+          </aside>
+          <div>
+            <h2 class="text-2xl font-bold tracking-tight">Quickstart</h2>
+            <div class="mx-auto max-w-2xl space-y-4 text-[15px] leading-relaxed text-muted-foreground [&_h2]:mt-8 [&_h2]:text-lg [&_h2]:font-semibold [&_h2]:tracking-tight [&_h2]:text-foreground">
+              <p>DevTools deploys any frontend framework or static site with zero configuration. Install the CLI, point it at your project, and run a single command.</p>
+              <div class="overflow-hidden rounded-lg border border-border bg-card font-mono text-[12.5px]">
+                <div class="border-b border-border bg-muted px-3.5 py-2 text-[11px] text-muted-foreground">terminal</div>
+                <pre class="overflow-x-auto px-4 py-3.5 leading-relaxed text-foreground/80"><code>npm i -g devtools-cli
+devtools login
+devtools deploy</code></pre>
+              </div>
+              <h2>What happens next</h2>
+              <p>DevTools detects your framework, installs dependencies, builds the project, and serves it from the edge. Every push to your default branch deploys to production; every pull request gets a preview URL.</p>
+              <h2>Next steps</h2>
+              <p>Add a custom domain, configure environment variables per environment, and wire up observability, all from the dashboard or the CLI.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </section>
+
+  <!-- PRICING -->
+  <section data-page="pricing">
+    <main class="mx-auto max-w-6xl border-x border-border">
+      <section class="border-b border-border px-6 py-16 text-center sm:px-16 lg:px-28">
+        <span class="font-mono text-[11px] font-medium uppercase tracking-[0.18em] text-muted-foreground">Pricing</span>
+        <h1 class="mx-auto mt-4 max-w-3xl text-4xl font-bold tracking-[-0.03em] sm:text-5xl">Start free. Scale when you do.</h1>
+        <p class="mx-auto mt-4 max-w-xl text-lg leading-relaxed text-muted-foreground">Simple, predictable pricing. No surprises, cancel anytime.</p>
+      </section>
+      <section class="px-6 py-14 sm:px-16 lg:px-28">
+        <div class="grid items-start gap-5 lg:grid-cols-3">
+          <div class="rounded-2xl border border-border bg-card p-6">
+            <div class="flex items-center justify-between"><h3 class="text-lg font-bold tracking-tight">Hobby</h3></div>
+            <p class="mt-1 text-sm text-muted-foreground">For personal projects and experiments.</p>
+            <div class="mt-4 flex items-baseline gap-1"><span class="text-4xl font-extrabold tracking-tight">$0</span><span class="text-sm text-muted-foreground">/ mo</span></div>
+            <a href="#" data-nav="pricing" class="mt-5 inline-flex w-full cursor-pointer items-center justify-center rounded-md border border-border px-5 py-2.5 text-sm font-semibold hover:bg-muted">Start free</a>
+            <ul class="mt-6 space-y-2.5 text-sm text-muted-foreground">
+              <li class="flex gap-2"><svg class="mt-0.5 h-4 w-4 shrink-0 text-foreground" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m5 12 5 5L20 7"/></svg> 1 concurrent build</li>
+              <li class="flex gap-2"><svg class="mt-0.5 h-4 w-4 shrink-0 text-foreground" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m5 12 5 5L20 7"/></svg> 100 GB bandwidth</li>
+              <li class="flex gap-2"><svg class="mt-0.5 h-4 w-4 shrink-0 text-foreground" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m5 12 5 5L20 7"/></svg> Preview deployments</li>
+              <li class="flex gap-2"><svg class="mt-0.5 h-4 w-4 shrink-0 text-foreground" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m5 12 5 5L20 7"/></svg> Community support</li>
+            </ul>
+          </div>
+          <div class="rounded-2xl border border-foreground bg-card p-6 shadow-lg">
+            <div class="flex items-center justify-between"><h3 class="text-lg font-bold tracking-tight">Pro</h3><span class="rounded-full bg-foreground px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-background">Popular</span></div>
+            <p class="mt-1 text-sm text-muted-foreground">For professional developers and teams.</p>
+            <div class="mt-4 flex items-baseline gap-1"><span class="text-4xl font-extrabold tracking-tight">$20</span><span class="text-sm text-muted-foreground">/ mo</span></div>
+            <a href="#" data-nav="pricing" class="mt-5 inline-flex w-full cursor-pointer items-center justify-center rounded-md bg-foreground px-5 py-2.5 text-sm font-semibold text-background hover:opacity-90">Start free trial</a>
+            <ul class="mt-6 space-y-2.5 text-sm text-muted-foreground">
+              <li class="flex gap-2"><svg class="mt-0.5 h-4 w-4 shrink-0 text-foreground" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m5 12 5 5L20 7"/></svg> Everything in Hobby</li>
+              <li class="flex gap-2"><svg class="mt-0.5 h-4 w-4 shrink-0 text-foreground" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m5 12 5 5L20 7"/></svg> Unlimited builds</li>
+              <li class="flex gap-2"><svg class="mt-0.5 h-4 w-4 shrink-0 text-foreground" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m5 12 5 5L20 7"/></svg> 1 TB bandwidth</li>
+              <li class="flex gap-2"><svg class="mt-0.5 h-4 w-4 shrink-0 text-foreground" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m5 12 5 5L20 7"/></svg> Observability + logs</li>
+              <li class="flex gap-2"><svg class="mt-0.5 h-4 w-4 shrink-0 text-foreground" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m5 12 5 5L20 7"/></svg> Email support</li>
+            </ul>
+          </div>
+          <div class="rounded-2xl border border-border bg-card p-6">
+            <div class="flex items-center justify-between"><h3 class="text-lg font-bold tracking-tight">Enterprise</h3></div>
+            <p class="mt-1 text-sm text-muted-foreground">For organizations at scale.</p>
+            <div class="mt-4 flex items-baseline gap-1"><span class="text-4xl font-extrabold tracking-tight">Custom</span></div>
+            <a href="#" data-nav="contact" class="mt-5 inline-flex w-full cursor-pointer items-center justify-center rounded-md border border-border px-5 py-2.5 text-sm font-semibold hover:bg-muted">Contact sales</a>
+            <ul class="mt-6 space-y-2.5 text-sm text-muted-foreground">
+              <li class="flex gap-2"><svg class="mt-0.5 h-4 w-4 shrink-0 text-foreground" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m5 12 5 5L20 7"/></svg> Everything in Pro</li>
+              <li class="flex gap-2"><svg class="mt-0.5 h-4 w-4 shrink-0 text-foreground" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m5 12 5 5L20 7"/></svg> SSO and SAML</li>
+              <li class="flex gap-2"><svg class="mt-0.5 h-4 w-4 shrink-0 text-foreground" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m5 12 5 5L20 7"/></svg> Audit logs and SLA</li>
+              <li class="flex gap-2"><svg class="mt-0.5 h-4 w-4 shrink-0 text-foreground" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m5 12 5 5L20 7"/></svg> Dedicated support</li>
+            </ul>
+          </div>
+        </div>
+        <div class="mx-auto mt-14 max-w-2xl">
+          <h2 class="text-center text-xl font-bold tracking-tight">Frequently asked questions</h2>
+          <div class="mt-6 divide-y divide-border overflow-hidden rounded-xl border border-border">
+            <div class="bg-card p-5"><p class="text-sm font-semibold">Is there a free plan?</p><p class="mt-1.5 text-sm text-muted-foreground">Yes. The Hobby plan is free forever and includes preview deployments and 100 GB of bandwidth.</p></div>
+            <div class="bg-card p-5"><p class="text-sm font-semibold">Can I change plans later?</p><p class="mt-1.5 text-sm text-muted-foreground">Absolutely. Upgrade or downgrade at any time; changes are prorated automatically.</p></div>
+            <div class="bg-card p-5"><p class="text-sm font-semibold">Do you offer discounts?</p><p class="mt-1.5 text-sm text-muted-foreground">We offer discounts for startups and open-source projects. Reach out to our team.</p></div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </section>
+
+  <!-- CHANGELOG -->
+  <section data-page="changelog">
+    <main class="mx-auto max-w-6xl border-x border-border">
+      <section class="border-b border-border px-6 py-16 text-center sm:px-16 lg:px-28">
+        <span class="font-mono text-[11px] font-medium uppercase tracking-[0.18em] text-muted-foreground">Changelog</span>
+        <h1 class="mx-auto mt-4 max-w-3xl text-4xl font-bold tracking-[-0.03em] sm:text-5xl">What's new in DevTools</h1>
+        <p class="mx-auto mt-4 max-w-xl text-lg leading-relaxed text-muted-foreground">Every improvement we ship, in one place.</p>
+      </section>
+      <section class="px-6 py-14 sm:px-16 lg:px-28">
+        <div class="mx-auto max-w-2xl space-y-8">
+          <article class="border-b border-border pb-8 last:border-0">
+            <p class="font-mono text-[11px] uppercase tracking-wide text-muted-foreground">Jun 4, 2026</p>
+            <h2 class="mt-2 text-xl font-bold tracking-tight">Edge Functions are now generally available</h2>
+            <p class="mt-2 text-sm leading-relaxed text-muted-foreground">Run code at the edge in 18 regions with zero cold starts. Available on every plan today.</p>
+          </article>
+          <article class="border-b border-border pb-8 last:border-0">
+            <p class="font-mono text-[11px] uppercase tracking-wide text-muted-foreground">May 21, 2026</p>
+            <h2 class="mt-2 text-xl font-bold tracking-tight">Faster builds with remote caching</h2>
+            <p class="mt-2 text-sm leading-relaxed text-muted-foreground">Shared build caches cut median build times by 40% across the platform.</p>
+          </article>
+          <article class="border-b border-border pb-8 last:border-0">
+            <p class="font-mono text-[11px] uppercase tracking-wide text-muted-foreground">May 7, 2026</p>
+            <h2 class="mt-2 text-xl font-bold tracking-tight">Audit logs for Enterprise</h2>
+            <p class="mt-2 text-sm leading-relaxed text-muted-foreground">Every action in your workspace is now recorded and exportable for compliance.</p>
+          </article>
+          <article class="border-b border-border pb-8 last:border-0">
+            <p class="font-mono text-[11px] uppercase tracking-wide text-muted-foreground">Apr 23, 2026</p>
+            <h2 class="mt-2 text-xl font-bold tracking-tight">One-click rollbacks</h2>
+            <p class="mt-2 text-sm leading-relaxed text-muted-foreground">Promote any previous deploy back to production from the dashboard or the CLI.</p>
+          </article>
+        </div>
+      </section>
+    </main>
+  </section>
+
+  <!-- ABOUT -->
+  <section data-page="about">
+    <main class="mx-auto max-w-6xl border-x border-border">
+      <section class="border-b border-border px-6 py-16 text-center sm:px-16 lg:px-28">
+        <span class="font-mono text-[11px] font-medium uppercase tracking-[0.18em] text-muted-foreground">About us</span>
+        <h1 class="mx-auto mt-4 max-w-3xl text-4xl font-bold tracking-[-0.03em] sm:text-5xl">We are building the fastest way to ship.</h1>
+        <p class="mx-auto mt-4 max-w-xl text-lg leading-relaxed text-muted-foreground">DevTools is a small, fully remote team obsessed with developer experience.</p>
+      </section>
+      <section class="px-6 py-14 sm:px-16 lg:px-28">
+        <div class="grid items-center gap-10 lg:grid-cols-2">
+          <div class="mx-auto max-w-2xl space-y-4 text-[15px] leading-relaxed text-muted-foreground">
+            <p>DevTools started with a simple frustration: deploying software was slower and more complicated than writing it. We set out to make shipping a non-event, so teams could spend their time building.</p>
+            <p>Today thousands of teams deploy to DevTools every day. We are a small crew that cares about craft, speed, and making infrastructure disappear.</p>
+          </div>
+          <div class="grid grid-cols-2 gap-4">
+            <div class="rounded-2xl border border-border bg-card p-6"><p class="text-4xl font-extrabold tracking-tight">2022</p><p class="mt-1 text-sm text-muted-foreground">Founded</p></div>
+            <div class="rounded-2xl border border-border bg-card p-6"><p class="text-4xl font-extrabold tracking-tight">14k+</p><p class="mt-1 text-sm text-muted-foreground">Teams</p></div>
+            <div class="rounded-2xl border border-border bg-card p-6"><p class="text-4xl font-extrabold tracking-tight">18</p><p class="mt-1 text-sm text-muted-foreground">Edge regions</p></div>
+            <div class="rounded-2xl border border-border bg-card p-6"><p class="text-4xl font-extrabold tracking-tight">100%</p><p class="mt-1 text-sm text-muted-foreground">Remote</p></div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </section>
+
+  <!-- BLOG -->
+  <section data-page="blog">
+    <main class="mx-auto max-w-6xl border-x border-border">
+      <section class="border-b border-border px-6 py-16 text-center sm:px-16 lg:px-28">
+        <span class="font-mono text-[11px] font-medium uppercase tracking-[0.18em] text-muted-foreground">Blog</span>
+        <h1 class="mx-auto mt-4 max-w-3xl text-4xl font-bold tracking-[-0.03em] sm:text-5xl">The DevTools blog</h1>
+        <p class="mx-auto mt-4 max-w-xl text-lg leading-relaxed text-muted-foreground">Product updates, engineering deep-dives, and guides.</p>
+      </section>
+      <section class="px-6 py-14 sm:px-16 lg:px-28">
+        <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          <a href="#" data-nav="post" class="group cursor-pointer rounded-xl border border-border bg-card p-6 transition-colors hover:bg-muted/50">
+            <span class="font-mono text-[11px] uppercase tracking-wide text-muted-foreground">Engineering &middot; 6 min</span>
+            <h3 class="mt-3 text-lg font-semibold leading-snug tracking-tight">How we cut cold starts to zero</h3>
+            <span class="mt-4 inline-flex items-center gap-1 text-sm font-medium">Read post <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
+          </a>
+          <a href="#" data-nav="post" class="group cursor-pointer rounded-xl border border-border bg-card p-6 transition-colors hover:bg-muted/50">
+            <span class="font-mono text-[11px] uppercase tracking-wide text-muted-foreground">Guides &middot; 8 min</span>
+            <h3 class="mt-3 text-lg font-semibold leading-snug tracking-tight">Deploying a monorepo on DevTools</h3>
+            <span class="mt-4 inline-flex items-center gap-1 text-sm font-medium">Read post <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
+          </a>
+          <a href="#" data-nav="post" class="group cursor-pointer rounded-xl border border-border bg-card p-6 transition-colors hover:bg-muted/50">
+            <span class="font-mono text-[11px] uppercase tracking-wide text-muted-foreground">Product &middot; 5 min</span>
+            <h3 class="mt-3 text-lg font-semibold leading-snug tracking-tight">What edge rendering means for your app</h3>
+            <span class="mt-4 inline-flex items-center gap-1 text-sm font-medium">Read post <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
+          </a>
+        </div>
+      </section>
+    </main>
+  </section>
+
+  <!-- POST -->
+  <section data-page="post">
+    <main class="mx-auto max-w-6xl border-x border-border">
+      <section class="border-b border-border px-6 py-16 sm:px-16 lg:px-28">
+        <div class="mx-auto max-w-2xl">
+          <a href="#" data-nav="blog" class="cursor-pointer font-mono text-[11px] uppercase tracking-wide text-muted-foreground hover:text-foreground">&larr; Back to blog</a>
+          <p class="mt-6 font-mono text-[11px] uppercase tracking-wide text-muted-foreground">Engineering &middot; 6 min read</p>
+          <h1 class="mt-3 text-3xl font-bold tracking-[-0.02em] sm:text-4xl">How we cut cold starts to zero</h1>
+        </div>
+      </section>
+      <section class="px-6 py-14 sm:px-16 lg:px-28">
+        <div class="mx-auto max-w-2xl space-y-4 text-[15px] leading-relaxed text-muted-foreground [&_h2]:mt-8 [&_h2]:text-lg [&_h2]:font-semibold [&_h2]:tracking-tight [&_h2]:text-foreground">
+          <p>Cold starts have long been the tax you pay for serverless. When a function hasn't run recently, the platform has to spin up a new instance, and your user waits. We decided that tax was unacceptable.</p>
+          <h2>The approach</h2>
+          <p>Instead of booting a fresh runtime per request, DevTools keeps a pool of warm isolates at every edge location and routes incoming requests to the nearest available one. The result is a sub-millisecond startup, even for traffic that arrives in bursts.</p>
+          <h2>What it means for you</h2>
+          <p>You deploy the same code you always have. There is nothing to configure. Your functions simply run faster, everywhere, all the time.</p>
+        </div>
+      </section>
+    </main>
+  </section>
+
+  <!-- CAREERS -->
+  <section data-page="careers">
+    <main class="mx-auto max-w-6xl border-x border-border">
+      <section class="border-b border-border px-6 py-16 text-center sm:px-16 lg:px-28">
+        <span class="font-mono text-[11px] font-medium uppercase tracking-[0.18em] text-muted-foreground">Careers</span>
+        <h1 class="mx-auto mt-4 max-w-3xl text-4xl font-bold tracking-[-0.03em] sm:text-5xl">Build the platform developers love.</h1>
+        <p class="mx-auto mt-4 max-w-xl text-lg leading-relaxed text-muted-foreground">We are a small, fully remote team. Come help us make shipping effortless.</p>
+      </section>
+      <section class="px-6 py-14 sm:px-16 lg:px-28">
+        <div class="mx-auto max-w-2xl divide-y divide-border overflow-hidden rounded-xl border border-border">
+          <a href="#" data-nav="contact" class="flex cursor-pointer items-center justify-between gap-4 bg-card p-5 transition-colors hover:bg-muted/50">
+            <div><p class="text-sm font-semibold tracking-tight">Senior Platform Engineer</p><p class="mt-0.5 text-xs text-muted-foreground">Infrastructure &middot; Remote</p></div>
+            <span class="inline-flex items-center gap-1 text-sm font-medium">Apply <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
+          </a>
+          <a href="#" data-nav="contact" class="flex cursor-pointer items-center justify-between gap-4 bg-card p-5 transition-colors hover:bg-muted/50">
+            <div><p class="text-sm font-semibold tracking-tight">Developer Advocate</p><p class="mt-0.5 text-xs text-muted-foreground">Developer Relations &middot; Remote</p></div>
+            <span class="inline-flex items-center gap-1 text-sm font-medium">Apply <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
+          </a>
+          <a href="#" data-nav="contact" class="flex cursor-pointer items-center justify-between gap-4 bg-card p-5 transition-colors hover:bg-muted/50">
+            <div><p class="text-sm font-semibold tracking-tight">Product Designer</p><p class="mt-0.5 text-xs text-muted-foreground">Design &middot; Remote</p></div>
+            <span class="inline-flex items-center gap-1 text-sm font-medium">Apply <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
+          </a>
+          <a href="#" data-nav="contact" class="flex cursor-pointer items-center justify-between gap-4 bg-card p-5 transition-colors hover:bg-muted/50">
+            <div><p class="text-sm font-semibold tracking-tight">Support Engineer</p><p class="mt-0.5 text-xs text-muted-foreground">Customer Success &middot; Remote</p></div>
+            <span class="inline-flex items-center gap-1 text-sm font-medium">Apply <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
+          </a>
+        </div>
+      </section>
+    </main>
+  </section>
+
+  <!-- CONTACT -->
+  <section data-page="contact">
+    <main class="mx-auto max-w-6xl border-x border-border">
+      <section class="border-b border-border px-6 py-16 text-center sm:px-16 lg:px-28">
+        <span class="font-mono text-[11px] font-medium uppercase tracking-[0.18em] text-muted-foreground">Contact</span>
+        <h1 class="mx-auto mt-4 max-w-3xl text-4xl font-bold tracking-[-0.03em] sm:text-5xl">Get in touch</h1>
+        <p class="mx-auto mt-4 max-w-xl text-lg leading-relaxed text-muted-foreground">Questions about DevTools? We would love to hear from you.</p>
+      </section>
+      <section class="px-6 py-14 sm:px-16 lg:px-28">
+        <div class="mx-auto grid max-w-3xl gap-5 sm:grid-cols-3">
+          <div class="rounded-xl border border-border bg-card p-6"><p class="text-base font-semibold tracking-tight">Sales</p><p class="mt-1.5 text-sm text-muted-foreground">Talk to our team about Enterprise.</p><p class="mt-3 font-mono text-[13px] text-foreground">sales@devtools.example</p></div>
+          <div class="rounded-xl border border-border bg-card p-6"><p class="text-base font-semibold tracking-tight">Support</p><p class="mt-1.5 text-sm text-muted-foreground">Get help with your account.</p><p class="mt-3 font-mono text-[13px] text-foreground">support@devtools.example</p></div>
+          <div class="rounded-xl border border-border bg-card p-6"><p class="text-base font-semibold tracking-tight">Press</p><p class="mt-1.5 text-sm text-muted-foreground">Media and partnership inquiries.</p><p class="mt-3 font-mono text-[13px] text-foreground">press@devtools.example</p></div>
+        </div>
+      </section>
+    </main>
+  </section>
+
+  <!-- PRIVACY -->
+  <section data-page="privacy">
+    <main class="mx-auto max-w-6xl border-x border-border">
+      <section class="border-b border-border px-6 py-16 text-center sm:px-16 lg:px-28">
+        <span class="font-mono text-[11px] font-medium uppercase tracking-[0.18em] text-muted-foreground">Legal</span>
+        <h1 class="mx-auto mt-4 max-w-3xl text-4xl font-bold tracking-[-0.03em] sm:text-5xl">Privacy Policy</h1>
+        <p class="mx-auto mt-4 max-w-xl text-lg leading-relaxed text-muted-foreground">Last updated June 2026.</p>
+      </section>
+      <section class="px-6 py-14 sm:px-16 lg:px-28">
+        <div class="mx-auto max-w-2xl space-y-4 text-[15px] leading-relaxed text-muted-foreground [&_h2]:mt-8 [&_h2]:text-lg [&_h2]:font-semibold [&_h2]:tracking-tight [&_h2]:text-foreground">
+          <p>This is placeholder copy for the privacy policy of DevTools. Replace it with your own legal text before launch.</p>
+          <h2>Overview</h2>
+          <p>By using DevTools, you agree to the terms described on this page. We aim to keep this document clear and free of unnecessary jargon.</p>
+          <h2>Your data</h2>
+          <p>We process only the data needed to operate the service, never sell it, and store it in the region you choose. You can export or delete it at any time.</p>
+          <h2>Contact</h2>
+          <p>Questions about this policy? Reach our team at legal@devtools.example.</p>
+        </div>
+      </section>
+    </main>
+  </section>
+
+  <!-- TERMS -->
+  <section data-page="terms">
+    <main class="mx-auto max-w-6xl border-x border-border">
+      <section class="border-b border-border px-6 py-16 text-center sm:px-16 lg:px-28">
+        <span class="font-mono text-[11px] font-medium uppercase tracking-[0.18em] text-muted-foreground">Legal</span>
+        <h1 class="mx-auto mt-4 max-w-3xl text-4xl font-bold tracking-[-0.03em] sm:text-5xl">Terms of Service</h1>
+        <p class="mx-auto mt-4 max-w-xl text-lg leading-relaxed text-muted-foreground">Last updated June 2026.</p>
+      </section>
+      <section class="px-6 py-14 sm:px-16 lg:px-28">
+        <div class="mx-auto max-w-2xl space-y-4 text-[15px] leading-relaxed text-muted-foreground [&_h2]:mt-8 [&_h2]:text-lg [&_h2]:font-semibold [&_h2]:tracking-tight [&_h2]:text-foreground">
+          <p>This is placeholder copy for the terms of service of DevTools. Replace it with your own legal text before launch.</p>
+          <h2>Overview</h2>
+          <p>By using DevTools, you agree to the terms described on this page. We aim to keep this document clear and free of unnecessary jargon.</p>
+          <h2>Your data</h2>
+          <p>We process only the data needed to operate the service, never sell it, and store it in the region you choose. You can export or delete it at any time.</p>
+          <h2>Contact</h2>
+          <p>Questions about this policy? Reach our team at legal@devtools.example.</p>
+        </div>
+      </section>
+    </main>
+  </section>
+
+  <!-- SECURITY -->
+  <section data-page="security">
+    <main class="mx-auto max-w-6xl border-x border-border">
+      <section class="border-b border-border px-6 py-16 text-center sm:px-16 lg:px-28">
+        <span class="font-mono text-[11px] font-medium uppercase tracking-[0.18em] text-muted-foreground">Legal</span>
+        <h1 class="mx-auto mt-4 max-w-3xl text-4xl font-bold tracking-[-0.03em] sm:text-5xl">Security</h1>
+        <p class="mx-auto mt-4 max-w-xl text-lg leading-relaxed text-muted-foreground">Last updated June 2026.</p>
+      </section>
+      <section class="px-6 py-14 sm:px-16 lg:px-28">
+        <div class="mx-auto max-w-2xl space-y-4 text-[15px] leading-relaxed text-muted-foreground [&_h2]:mt-8 [&_h2]:text-lg [&_h2]:font-semibold [&_h2]:tracking-tight [&_h2]:text-foreground">
+          <p>This is placeholder copy for the security of DevTools. Replace it with your own legal text before launch.</p>
+          <h2>Overview</h2>
+          <p>By using DevTools, you agree to the terms described on this page. We aim to keep this document clear and free of unnecessary jargon.</p>
+          <h2>Your data</h2>
+          <p>We process only the data needed to operate the service, never sell it, and store it in the region you choose. You can export or delete it at any time.</p>
+          <h2>Contact</h2>
+          <p>Questions about this policy? Reach our team at legal@devtools.example.</p>
+        </div>
+      </section>
+    </main>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="border-t border-border bg-card">
+    <div class="mx-auto max-w-6xl px-6 py-14">
+      <div class="grid gap-10 sm:grid-cols-2 lg:grid-cols-5">
+        <div class="lg:col-span-2">
+          <a href="#" data-nav="home" class="flex cursor-pointer items-center gap-2">
+            <span class="flex h-6 w-6 items-center justify-center rounded-md bg-foreground text-background"><svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="currentColor"><path d="M3 3h18v4H3zM3 10h12v4H3zM3 17h18v4H3z"/></svg></span>
+            <span class="text-[15px] font-semibold tracking-tight">DevTools</span>
+          </a>
+          <p class="mt-4 max-w-xs text-sm leading-relaxed text-muted-foreground">The developer platform to build, deploy, and scale your apps on the edge.</p>
+          <div class="mt-5 inline-flex items-center gap-2 rounded-full border border-border px-3 py-1">
+            <span class="h-1.5 w-1.5 rounded-full bg-foreground"></span>
+            <span class="font-mono text-[11px] text-muted-foreground">All systems operational</span>
+          </div>
+        </div>
+        <div>
+          <p class="font-mono text-[11px] uppercase tracking-wide text-muted-foreground">Product</p>
+          <ul class="mt-3 space-y-2.5 text-sm text-muted-foreground">
+            <li><a href="#" data-nav="features" class="cursor-pointer hover:text-foreground">Features</a></li>
+            <li><a href="#" data-nav="pricing" class="cursor-pointer hover:text-foreground">Pricing</a></li>
+            <li><a href="#" data-nav="docs" class="cursor-pointer hover:text-foreground">Docs</a></li>
+            <li><a href="#" data-nav="changelog" class="cursor-pointer hover:text-foreground">Changelog</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="font-mono text-[11px] uppercase tracking-wide text-muted-foreground">Company</p>
+          <ul class="mt-3 space-y-2.5 text-sm text-muted-foreground">
+            <li><a href="#" data-nav="about" class="cursor-pointer hover:text-foreground">About</a></li>
+            <li><a href="#" data-nav="blog" class="cursor-pointer hover:text-foreground">Blog</a></li>
+            <li><a href="#" data-nav="careers" class="cursor-pointer hover:text-foreground">Careers</a></li>
+            <li><a href="#" data-nav="contact" class="cursor-pointer hover:text-foreground">Contact</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="font-mono text-[11px] uppercase tracking-wide text-muted-foreground">Legal</p>
+          <ul class="mt-3 space-y-2.5 text-sm text-muted-foreground">
+            <li><a href="#" data-nav="privacy" class="cursor-pointer hover:text-foreground">Privacy</a></li>
+            <li><a href="#" data-nav="terms" class="cursor-pointer hover:text-foreground">Terms</a></li>
+            <li><a href="#" data-nav="security" class="cursor-pointer hover:text-foreground">Security</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="mt-12 border-t border-border pt-6 text-sm text-muted-foreground">&copy; 2026 DevTools, Inc.</div>
+    </div>
+  </footer>
+</div>
+
+<script>
+  document.querySelectorAll("[data-landing]").forEach((root) => {
+    const pages = root.querySelectorAll("[data-page]");
+    const mobileNav = root.querySelector("[data-mobile-nav]");
+    const show = (name) => {
+      pages.forEach((s) => s.classList.toggle("is-active", s.getAttribute("data-page") === name));
+      mobileNav?.classList.add("hidden");
+      if (typeof window !== "undefined") window.scrollTo({ top: 0 });
+    };
+    root.querySelector("[data-nav-toggle]")?.addEventListener("click", () => mobileNav?.classList.toggle("hidden"));
+    root.querySelectorAll("[data-nav]").forEach((a) => a.addEventListener("click", (e) => {
+      e.preventDefault();
+      show(a.getAttribute("data-nav"));
+    }));
+  });
+</script>
+  </body>
+</html>

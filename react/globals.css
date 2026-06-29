@@ -1,0 +1,137 @@
+/* Design tokens for the DevTools landing page template by SaaS Design. MIT licensed. */
+
+@import "tailwindcss";
+
+@theme inline {
+  /* Type */
+  --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", monospace;
+  /* Display font, used on landing/marketing templates only (dashboards keep
+     --font-sans). Apply with the `font-display` utility. */
+  --font-display: "Figtree", ui-sans-serif, system-ui, -apple-system, sans-serif;
+
+  /* Semantic color mapping (components use these utility names) */
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-success: var(--success);
+  --color-success-foreground: var(--success-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  /* Radius scale (derived from one --radius so the whole feel shifts together) */
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+
+  /* Elevation: subtle, neutral, slightly cool. Borders lead; shadows support. */
+  --shadow-xs: 0 1px 2px 0 oklch(0.2 0.04 285 / 0.06);
+  --shadow-sm: 0 1px 3px 0 oklch(0.2 0.04 285 / 0.08), 0 1px 2px -1px oklch(0.2 0.04 285 / 0.08);
+  --shadow-md: 0 4px 12px -2px oklch(0.2 0.04 285 / 0.10);
+  --shadow-lg: 0 12px 32px -8px oklch(0.2 0.04 285 / 0.14);
+
+  /* Motion: restrained and snappy */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --duration-fast: 150ms;
+  --duration: 200ms;
+}
+
+:root {
+  /* Highest-identity single decision: medium radius, friendly but precise. */
+  --radius: 0.625rem;
+
+  /* Brand ramp (modern, gender-neutral blue) */
+  --brand-50:  oklch(0.970 0.018 255);
+  --brand-100: oklch(0.930 0.040 255);
+  --brand-300: oklch(0.780 0.110 255);
+  --brand-500: oklch(0.560 0.180 255); /* primary */
+  --brand-600: oklch(0.500 0.185 255); /* hover/active */
+  --brand-700: oklch(0.440 0.160 255);
+  --brand-900: oklch(0.300 0.110 255);
+
+  /* Light mode (this is the mode we perfect). Neutrals are cool gray. */
+  --background: oklch(0.990 0.002 260);
+  --foreground: oklch(0.220 0.010 260);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.220 0.010 260);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.220 0.010 260);
+  --primary: var(--brand-500);
+  --primary-foreground: oklch(0.990 0 0);
+  --secondary: oklch(0.965 0.004 260);
+  --secondary-foreground: oklch(0.300 0.010 260);
+  --muted: oklch(0.965 0.004 260);
+  --muted-foreground: oklch(0.520 0.012 260);
+  --accent: oklch(0.950 0.022 255);
+  --accent-foreground: var(--brand-700);
+  --destructive: oklch(0.580 0.210 25);
+  --destructive-foreground: oklch(0.990 0 0);
+  --success: oklch(0.600 0.150 150);
+  --success-foreground: oklch(0.990 0 0);
+  --border: oklch(0.920 0.005 260);
+  --input: oklch(0.920 0.005 260);
+  --ring: var(--brand-500);
+}
+
+.dark {
+  /* Near-black, faintly cool-blue. Deep canvas with a measured blue accent
+     (present, not neon) so it reads well in dark mode without being intrusive.
+     Cards lift just enough off the bg; borders (not shadows) define structure. */
+  --background: oklch(0.155 0.012 255);
+  --foreground: oklch(0.970 0.005 255);
+  --card: oklch(0.200 0.014 255);
+  --card-foreground: oklch(0.970 0.005 255);
+  --popover: oklch(0.200 0.014 255);
+  --popover-foreground: oklch(0.970 0.005 255);
+  --primary: oklch(0.640 0.155 255);
+  --primary-foreground: oklch(0.990 0 0);
+  --secondary: oklch(0.235 0.014 255);
+  --secondary-foreground: oklch(0.970 0.005 255);
+  --muted: oklch(0.235 0.014 255);
+  --muted-foreground: oklch(0.720 0.020 255);
+  --accent: oklch(0.320 0.045 255);
+  --accent-foreground: oklch(0.970 0.005 255);
+  --destructive: oklch(0.640 0.190 25);
+  --destructive-foreground: oklch(0.990 0 0);
+  --success: oklch(0.680 0.160 150);
+  --success-foreground: oklch(0.150 0.020 255);
+  --border: oklch(0.275 0.014 255);
+  --input: oklch(0.275 0.014 255);
+  --ring: oklch(0.640 0.155 255);
+}
+
+@layer base {
+  * {
+    border-color: var(--border);
+  }
+  body {
+    background-color: var(--background);
+    color: var(--foreground);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  /* The one typographic rule: headings are tight-tracked; body never exceeds 70ch. */
+  h1, h2, h3, h4 {
+    letter-spacing: -0.02em;
+    text-wrap: balance;
+  }
+  p {
+    max-width: 70ch;
+  }
+}
