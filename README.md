@@ -4,11 +4,13 @@ A clean, production-ready **SaaS landing page template** built on **Tailwind CSS
 
 Free and MIT licensed. Use it in personal and commercial projects.
 
+**[▶ Live demo](https://www.saasdesign.io/saas-landing-page-template/)**
+
 ![SaaS landing page template](./SaaS-landing-page-template.png)
 
 ## Quick start
 
-The fastest way to see it: open **`html/index.html`** in your browser. No build step, no install. It loads Tailwind from a CDN and renders the full template.
+See it running in the [live demo](https://www.saasdesign.io/saas-landing-page-template/). To run it locally, open **`html/index.html`** in your browser. No build step, no install. It loads Tailwind from a CDN and renders the full template.
 
 For a real project, use the React or Vue component below.
 
