@@ -2,7 +2,7 @@
 
 A clean, production-ready **SaaS landing page template** built on **Tailwind CSS**, in **React, Vue, and plain HTML**. This is the "DevTools" theme: a crisp, monochrome developer-tool style with a full multi-page layout (home, features, docs, pricing, changelog, blog, about, careers, contact, and legal pages).
 
-Free and MIT licensed. Use it in personal and commercial projects.
+Open source: free and MIT licensed. Use it in personal and commercial projects.
 
 **[▶ Live demo](https://www.saasdesign.io/saas-landing-page-template/)**
 
