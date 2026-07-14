@@ -69,7 +69,7 @@ This is **1 of 9** landing page templates from **[SaaS Design](https://www.saasd
 
 **[See all 9 templates and the design system →](https://www.saasdesign.io/pricing/)**
 
-The full bundle is a one-time **$39** (all 9 templates, the complete app UI, and the design system, no subscription). Because you found us through this repo, use code **`GITHUB20`** at checkout for **$20 off**.
+The full bundle is a one-time **$19** (all 9 templates, the complete app UI, and the design system, no subscription).
 
 Built for people shipping with AI coding tools:
 - [Claude Code templates](https://www.saasdesign.io/claude-code-templates/)
